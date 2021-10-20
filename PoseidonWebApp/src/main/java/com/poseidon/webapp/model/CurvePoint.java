@@ -3,11 +3,17 @@ package com.poseidon.webapp.model;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 public class CurvePoint {
 
 	private int id;
-	private int curveId;
+	@NotNull(message = "Must not be null")
+    @Min(value = 1, message = "Must not be null")
+	private Integer curveId;
 	private Timestamp asOfDate;
 	private double term;
 	private double value;
@@ -16,7 +22,7 @@ public class CurvePoint {
 	public CurvePoint() {
 	}
 	
-	public CurvePoint(int id, int curveId, Timestamp asOfDate, double term, double value, Timestamp creationDate) {
+	public CurvePoint(int id, Integer curveId, Timestamp asOfDate, double term, double value, Timestamp creationDate) {
 		super();
 		this.id = id;
 		this.curveId = curveId;
@@ -34,11 +40,11 @@ public class CurvePoint {
 		this.id = id;
 	}
 
-	public int getCurveId() {
+	public Integer getCurveId() {
 		return curveId;
 	}
 
-	public void setCurveId(int curveId) {
+	public void setCurveId(Integer curveId) {
 		this.curveId = curveId;
 	}
 

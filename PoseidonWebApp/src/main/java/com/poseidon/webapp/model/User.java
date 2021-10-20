@@ -2,13 +2,23 @@ package com.poseidon.webapp.model;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotEmpty;
 
+import org.springframework.stereotype.Component;
+
+import com.poseidon.webapp.config.ValidPassword;
+
+@Component
 public class User {
 	
 	private int id;
+	@NotEmpty(message="Username is mandatory")
 	private String username;
+	@ValidPassword
 	private String password;
+	@NotEmpty(message="Full name is mandatory")
 	private String fullname;
+	@NotEmpty(message="Role is mandatory")
 	private String role;
 	
 	public User() {

@@ -3,11 +3,17 @@ package com.poseidon.webapp.model;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 public class Trade {
 
 	private int id;
+	@NotEmpty(message="Account is mandatory")
 	private String account;
+	@NotEmpty(message="Type is mandatory")
 	private String type;
 	private double buyQuantity;
 	private double sellQuantity;

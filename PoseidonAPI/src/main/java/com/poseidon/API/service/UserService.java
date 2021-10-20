@@ -1,34 +1,21 @@
 package com.poseidon.API.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.poseidon.API.model.User;
-import com.poseidon.API.repo.UserRepository;
 
-@Service
-public class UserService {
+public interface UserService {
+
+	Iterable<User> getUsers();
 	
-	@Autowired
-	private UserRepository userRepository;
+	Optional<User> getUser(final Integer id);
 	
-	public Optional<User> getUser(final Integer id) {
-		return userRepository.findById(id);
-	}
+	void deleteUser(final Integer id);
 	
-	public Iterable<User> getUsers() {
-		return userRepository.findAll();
-	}
+	User saveUser(User user);
 	
-	public void deleteUser(final Integer id) {
-		userRepository.deleteById(id);
-	}
-	
-	public User saveUser(User user) {
-		User savedUser = userRepository.save(user);
-		return savedUser;
-	}
+	// Pour authentification
+	User getUser(String username) ;
 
 }

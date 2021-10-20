@@ -16,59 +16,59 @@ import com.poseidon.API.service.BidService;
 
 @RestController
 public class BidController {
-	
+
 	@Autowired
 	private BidService bidService;
-	
-	
+
 	@GetMapping("/bid/{id}")
 	public Bid getBid(@PathVariable("id") final Integer id) {
 		Optional<Bid> bid = bidService.getBid(id);
-		if(bid.isPresent()) {
+		if (bid.isPresent()) {
 			return bid.get();
 		} else {
 			return null;
 		}
 	}
-	
+
 	@GetMapping("/bids")
 	public Iterable<Bid> getBids() {
 		return bidService.getBids();
 	}
-	
+
 	@PostMapping("/bid")
 	public Bid createBid(@RequestBody Bid bid) {
 		return bidService.saveBid(bid);
 	}
-	
+
 	@DeleteMapping("/bid/{id}")
 	public void deleteBid(@PathVariable("id") final Integer id) {
 		bidService.deleteBid(id);
 	}
-	
+
 	@PutMapping("/bid/{id}")
 	public Bid updateBid(@PathVariable("id") final Integer id, @RequestBody Bid bid) {
 		Optional<Bid> e = bidService.getBid(id);
-		if(e.isPresent()) {
+		if (e.isPresent()) {
 			Bid currentBid = e.get();
-			
-			
-			/*
-			 * String firstName = bidList.getFirstName(); if(firstName != null) {
-			 * currentBidList.setFirstName(firstName); } String lastName =
-			 * bidList.getLastName(); if(lastName != null) {
-			 * currentBidList.setLastName(lastName);; } String mail = bidList.getMail();
-			 * if(mail != null) { currentBidList.setMail(mail); } String password =
-			 * bidList.getPassword(); if(password != null) {
-			 * currentBidList.setPassword(password);; }
-			 */
+
+			String account = bid.getAccount();
+			if (account != null) {
+				currentBid.setAccount(account);
+			}
+			String type = bid.getType();
+			if (type != null) {
+				currentBid.setType(type);
+			}
+			double bidQuantity = bid.getBidQuantity();
+			if (bidQuantity != 0) {
+				currentBid.setBidQuantity(bidQuantity);
+			}
+
 			bidService.saveBid(currentBid);
 			return currentBid;
 		} else {
 			return null;
 		}
 	}
-	
-	
 
 }

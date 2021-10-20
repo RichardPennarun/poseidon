@@ -1,53 +1,78 @@
 package com.poseidon.webapp.controller;
 
+import javax.validation.Valid;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.poseidon.webapp.model.Bid;
+import com.poseidon.webapp.service.BidService;
 
 @Controller
 public class BidController {
 
-    @RequestMapping("/bid/list")
-    public String home(Model model)
-    {
-        // TODO: call service find all bids to show to the view
-        return "bid/list";
-    }
+	private static final Logger logger = LogManager.getLogger(BidController.class);
 
-    @GetMapping("/bid/add")
-    public String addBidForm(Bid bid) {
-        return "bid/add";
-    }
+	@Autowired
+	private BidService bidService;
 
-    //@PostMapping("/bid/validate")
-    //public String validate(@Validated Bid bid, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list
-      //  return "bid/add";
-    //}
+	@RequestMapping("/bidList")
+	public String bidList(Model model) {
+		Iterable<Bid> listBid = bidService.getBids();
+		model.addAttribute("bids", listBid);
+		logger.info("Return all bids list");
+		return "bid/list";
+	}
 
-    @GetMapping("/bid/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
-        return "bid/update";
-    }
+	@GetMapping("/createBid")
+	public String addBidForm(Model model) {
+		Bid bid = new Bid();
+		model.addAttribute("bid", bid);
+		logger.info("Return new bid form");
+		return "bid/add";
+	}
 
-    @PostMapping("/bid/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Validated Bid bid,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
-        return "redirect:/bid/list";
-    }
+	@PostMapping("/validateBidAdd")
+	public String validateAdd(@Valid Bid bid, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "bid/add";
+		}
+		Bid savedBid = bidService.saveBid(bid);
+		logger.info("New bid added: " + savedBid + "");
+		return "redirect:/bidList";
+	}
 
-    @GetMapping("/bid/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
-        return "redirect:/bid/list";
-    }
+	@GetMapping("/updateBid/{id}")
+	public String updateBid(@PathVariable("id") Integer id, Model model) {
+		Bid bid = bidService.getBid(id);
+		model.addAttribute("bid", bid);
+		logger.info("Return update form");
+		return "bid/update";
+	}
+
+	@PostMapping("/validateBidUpdate")
+	public String validateUpdate(@Valid Bid bid, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "bid/update";
+		}
+		Bid updatedBid = bidService.saveBid(bid);
+		logger.info("Bid updated: " + updatedBid + "");
+		return "redirect:/bidList";
+	}
+
+	@GetMapping("/deleteBid/{id}")
+	public String deleteBid(@PathVariable("id") Integer id) {
+		bidService.deleteBid(id);
+		logger.info("Bid number " + id + " deleted");
+		return "redirect:/bidList";
+	}
+
 }

@@ -16,59 +16,71 @@ import com.poseidon.API.service.RuleService;
 
 @RestController
 public class RuleController {
-	
+
 	@Autowired
 	private RuleService ruleService;
-	
-	
+
 	@GetMapping("/rule/{id}")
 	public Rule getRule(@PathVariable("id") final Integer id) {
 		Optional<Rule> rule = ruleService.getRule(id);
-		if(rule.isPresent()) {
+		if (rule.isPresent()) {
 			return rule.get();
 		} else {
 			return null;
 		}
 	}
-	
+
 	@GetMapping("/rules")
 	public Iterable<Rule> getRules() {
 		return ruleService.getRules();
 	}
-	
+
 	@PostMapping("/rule")
 	public Rule createRule(@RequestBody Rule rule) {
 		return ruleService.saveRule(rule);
 	}
-	
+
 	@DeleteMapping("/rule/{id}")
 	public void deleteRule(@PathVariable("id") final Integer id) {
 		ruleService.deleteRule(id);
 	}
-	
+
 	@PutMapping("/rule/{id}")
 	public Rule updateRule(@PathVariable("id") final Integer id, @RequestBody Rule rule) {
 		Optional<Rule> e = ruleService.getRule(id);
-		if(e.isPresent()) {
+		if (e.isPresent()) {
 			Rule currentRule = e.get();
-			
-			
-			/*
-			 * String firstName = ruleName.getFirstName(); if(firstName != null) {
-			 * currentRuleName.setFirstName(firstName); } String lastName =
-			 * ruleName.getLastName(); if(lastName != null) {
-			 * currentRuleName.setLastName(lastName);; } String mail = ruleName.getMail();
-			 * if(mail != null) { currentRuleName.setMail(mail); } String password =
-			 * ruleName.getPassword(); if(password != null) {
-			 * currentRuleName.setPassword(password);; }
-			 */
+
+			String name = rule.getName();
+			if (name != null) {
+				currentRule.setName(name);
+			}
+			String description = rule.getDescription();
+			if (description != null) {
+				currentRule.setDescription(description);
+			}
+			String json = rule.getJson();
+			if (json != null) {
+				currentRule.setJson(json);
+			}
+			String template = rule.getTemplate();
+			if (template != null) {
+				currentRule.setTemplate(template);
+			}
+			String sqlStr = rule.getSqlStr();
+			if (sqlStr != null) {
+				currentRule.setSqlStr(sqlStr);
+			}
+			String sqlPart = rule.getSqlPart();
+			if (sqlPart != null) {
+				currentRule.setSqlPart(sqlPart);
+			}
+
 			ruleService.saveRule(currentRule);
 			return currentRule;
 		} else {
 			return null;
 		}
 	}
-	
-	
 
 }

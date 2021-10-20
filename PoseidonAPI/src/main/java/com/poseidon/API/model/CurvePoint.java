@@ -13,7 +13,7 @@ public class CurvePoint {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "curve_id")
-	private int curveId;
+	private Integer curveId;
 	@Column(name = "as_of_date")
 	private Timestamp asOfDate;
 	private double term;
@@ -24,7 +24,7 @@ public class CurvePoint {
 	public CurvePoint() {
 	}
 	
-	public CurvePoint(int id, int curveId, Timestamp asOfDate, double term, double value, Timestamp creationDate) {
+	public CurvePoint(int id, Integer curveId, Timestamp asOfDate, double term, double value, Timestamp creationDate) {
 		super();
 		this.id = id;
 		this.curveId = curveId;
@@ -42,11 +42,11 @@ public class CurvePoint {
 		this.id = id;
 	}
 
-	public int getCurveId() {
+	public Integer getCurveId() {
 		return curveId;
 	}
 
-	public void setCurveId(int curveId) {
+	public void setCurveId(Integer curveId) {
 		this.curveId = curveId;
 	}
 

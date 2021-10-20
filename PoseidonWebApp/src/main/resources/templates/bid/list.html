@@ -3,29 +3,33 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<title>Bids</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
-			<a href="/ruleName/list">Rule</a>
+			<a href="/bidList">Bids</a>&nbsp;|&nbsp;
+			<a href="/curvePointList">Curve Points</a>&nbsp;|&nbsp;
+			<a href="/ratingList">Ratings</a>&nbsp;|&nbsp;
+			<a href="/tradeList">Trades</a>&nbsp;|&nbsp;
+			<a href="/ruleList">Rules</a>
 		</div>
 		<div class="col-6 text-right">
 			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-			<form th:action="@{/app-logout}" method="POST">
+			<form th:action="@{/logout}" method="POST">
 				<input type="submit" value="Logout"/>
 			</form>
 		</div>
 	</div>
-	<div class="row"><h2>Bid List</h2></div>
+	<div class="row"><h2>Bids List</h2></div>
 	<div class="row">
-		<a href="/bidList/add" class="btn btn-primary btn-sm">Add New</a>
+		<a href="/createBid" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -37,10 +41,39 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- TODO: Show all Bids to the table, the Action column will have Edit & Delete buttons -->
-			</tbody>
+					<tr th:if="${bids.empty}">
+						<td colspan="5">No bid in database</td>
+					</tr>
+					<tr th:each="bid: ${bids}">
+						<td><span th:text="${bid.id}"> Id </span></td>
+						<td><span th:text="${bid.account}"> Account </span></td>
+						<td><span th:text="${bid.type}"> Type </span></td>
+						<td><span th:text="${bid.bidQuantity}"> Bid Quantity </span></td>
+						<td>
+							<a th:href="@{/updateBid/{id}(id=${bid.id})}">
+							<button class="btn btn-info">Edit</button></a>
+							<a th:href="@{/deleteBid/{id}(id=${bid.id})}">
+							<button class="btn btn-danger">Delete</button></a>						
+						</td>
+					</tr>
+				</tbody>
 		</table>
 	</div>
 </div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+
+
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 </body>
 </html>

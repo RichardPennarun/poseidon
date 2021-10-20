@@ -16,59 +16,63 @@ import com.poseidon.API.service.RatingService;
 
 @RestController
 public class RatingController {
-	
+
 	@Autowired
 	private RatingService ratingService;
-	
-	
+
 	@GetMapping("/rating/{id}")
 	public Rating getRating(@PathVariable("id") final Integer id) {
 		Optional<Rating> rating = ratingService.getRating(id);
-		if(rating.isPresent()) {
+		if (rating.isPresent()) {
 			return rating.get();
 		} else {
 			return null;
 		}
 	}
-	
+
 	@GetMapping("/ratings")
 	public Iterable<Rating> getRatings() {
 		return ratingService.getRatings();
 	}
-	
+
 	@PostMapping("/rating")
 	public Rating createRating(@RequestBody Rating rating) {
 		return ratingService.saveRating(rating);
 	}
-	
+
 	@DeleteMapping("/rating/{id}")
 	public void deleteRating(@PathVariable("id") final Integer id) {
 		ratingService.deleteRating(id);
 	}
-	
+
 	@PutMapping("/rating/{id}")
 	public Rating updateRating(@PathVariable("id") final Integer id, @RequestBody Rating rating) {
 		Optional<Rating> e = ratingService.getRating(id);
-		if(e.isPresent()) {
+		if (e.isPresent()) {
 			Rating currentRating = e.get();
-			
-			
-			/*
-			 * String firstName = rating.getFirstName(); if(firstName != null) {
-			 * currentRating.setFirstName(firstName); } String lastName =
-			 * rating.getLastName(); if(lastName != null) {
-			 * currentRating.setLastName(lastName);; } String mail = rating.getMail();
-			 * if(mail != null) { currentRating.setMail(mail); } String password =
-			 * rating.getPassword(); if(password != null) {
-			 * currentRating.setPassword(password);; }
-			 */
+
+			String moodysRating = rating.getMoodysRating();
+			if (moodysRating != null) {
+				currentRating.setMoodysRating(moodysRating);
+			}
+			String sAndPRating = rating.getSAndPRating();
+			if (sAndPRating != null) {
+				currentRating.setSAndPRating(sAndPRating);
+			}
+			String fitchRating = rating.getFitchRating();
+			if (fitchRating != null) {
+				currentRating.setFitchRating(fitchRating);
+			}
+			Integer orderNumber = rating.getOrderNumber();
+			if (orderNumber != null) {
+				currentRating.setOrderNumber(orderNumber);
+			}
+
 			ratingService.saveRating(currentRating);
 			return currentRating;
 		} else {
 			return null;
 		}
 	}
-	
-	
 
 }

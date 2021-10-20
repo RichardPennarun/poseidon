@@ -17,6 +17,16 @@ public class UserProxy {
 	@Autowired
 	private CustomProperties props;
 
+	// Get a user by its username (authentication)
+	public User findByUsername(String username) {
+		String baseApiUrl = props.getApiUrl();
+		String getUserUrl = baseApiUrl + "/user/" + username;
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<User> response = restTemplate.exchange(getUserUrl, HttpMethod.GET, null, User.class);
+		//logger.info("User found by its email.");
+		return response.getBody();
+	}
+
 	public Iterable<User> getUsers() {
 
 		String baseApiUrl = props.getApiUrl();
@@ -37,7 +47,7 @@ public class UserProxy {
 	
 	public User getUser(int id) {
 		String baseApiUrl = props.getApiUrl();
-		String getUserUrl = baseApiUrl + "/user/" + id;
+		String getUserUrl = baseApiUrl + "/user/id/" + id;
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<User> response = restTemplate.exchange(

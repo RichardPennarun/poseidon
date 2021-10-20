@@ -14,20 +14,20 @@ public class Rating {
 	@Column(name = "moodys_rating")
 	private String moodysRating;
 	@Column(name = "s_and_p_rating")
-	private String sandPRating;
+	private String sAndPRating;
 	@Column(name = "fitch_rating")
 	private String fitchRating;
 	@Column(name = "order_number")
-	private int orderNumber;
+	private Integer orderNumber;
 	
 	public Rating() {
 	}
 
-	public Rating(int id, String moodysRating, String sandPRating, String fitchRating, int orderNumber) {
+	public Rating(int id, String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
 		super();
 		this.id = id;
 		this.moodysRating = moodysRating;
-		this.sandPRating = sandPRating;
+		this.sAndPRating = sAndPRating;
 		this.fitchRating = fitchRating;
 		this.orderNumber = orderNumber;
 	}
@@ -48,12 +48,12 @@ public class Rating {
 		this.moodysRating = moodysRating;
 	}
 
-	public String getSandPRating() {
-		return sandPRating;
+	public String getSAndPRating() {
+		return sAndPRating;
 	}
 
-	public void setSandPRating(String sandPRating) {
-		this.sandPRating = sandPRating;
+	public void setSAndPRating(String sAndPRating) {
+		this.sAndPRating = sAndPRating;
 	}
 
 	public String getFitchRating() {
@@ -64,23 +64,23 @@ public class Rating {
 		this.fitchRating = fitchRating;
 	}
 
-	public int getOrderNumber() {
+	public Integer getOrderNumber() {
 		return orderNumber;
 	}
 
-	public void setOrderNumber(int orderNumber) {
+	public void setOrderNumber(Integer orderNumber) {
 		this.orderNumber = orderNumber;
 	}
 
 	@Override
 	public String toString() {
-		return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sandPRating=" + sandPRating + ", fitchRating="
+		return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sAndPRating=" + sAndPRating + ", fitchRating="
 				+ fitchRating + ", orderNumber=" + orderNumber + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fitchRating, id, moodysRating, orderNumber, sandPRating);
+		return Objects.hash(fitchRating, id, moodysRating, orderNumber, sAndPRating);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class Rating {
 		Rating other = (Rating) obj;
 		return Objects.equals(fitchRating, other.fitchRating) && id == other.id
 				&& Objects.equals(moodysRating, other.moodysRating) && orderNumber == other.orderNumber
-				&& Objects.equals(sandPRating, other.sandPRating);
+				&& Objects.equals(sAndPRating, other.sAndPRating);
 	}
 
 	
