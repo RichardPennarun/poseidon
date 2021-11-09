@@ -24,7 +24,7 @@ public class BidController {
 	@Autowired
 	private BidService bidService;
 
-	@RequestMapping("/bidList")
+	@GetMapping("/bidList")
 	public String bidList(Model model) {
 		Iterable<Bid> listBid = bidService.getBids();
 		model.addAttribute("bids", listBid);

@@ -23,15 +23,6 @@ public class Rating {
 	public Rating() {
 	}
 
-	public Rating(int id, String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
-		super();
-		this.id = id;
-		this.moodysRating = moodysRating;
-		this.sAndPRating = sAndPRating;
-		this.fitchRating = fitchRating;
-		this.orderNumber = orderNumber;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -71,33 +62,5 @@ public class Rating {
 	public void setOrderNumber(Integer orderNumber) {
 		this.orderNumber = orderNumber;
 	}
-
-	@Override
-	public String toString() {
-		return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sAndPRating=" + sAndPRating + ", fitchRating="
-				+ fitchRating + ", orderNumber=" + orderNumber + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(fitchRating, id, moodysRating, orderNumber, sAndPRating);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Rating other = (Rating) obj;
-		return Objects.equals(fitchRating, other.fitchRating) && id == other.id
-				&& Objects.equals(moodysRating, other.moodysRating) && orderNumber == other.orderNumber
-				&& Objects.equals(sAndPRating, other.sAndPRating);
-	}
-
-	
-	
 
 }

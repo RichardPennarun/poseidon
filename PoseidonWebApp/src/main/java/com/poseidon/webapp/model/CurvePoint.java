@@ -21,16 +21,6 @@ public class CurvePoint {
 
 	public CurvePoint() {
 	}
-	
-	public CurvePoint(int id, Integer curveId, Timestamp asOfDate, double term, double value, Timestamp creationDate) {
-		super();
-		this.id = id;
-		this.curveId = curveId;
-		this.asOfDate = asOfDate;
-		this.term = term;
-		this.value = value;
-		this.creationDate = creationDate;
-	}
 
 	public int getId() {
 		return id;
@@ -79,33 +69,5 @@ public class CurvePoint {
 	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	}
-
-	@Override
-	public String toString() {
-		return "CurvePoint [id=" + id + ", curveId=" + curveId + ", asOfDate=" + asOfDate + ", term=" + term
-				+ ", value=" + value + ", creationDate=" + creationDate + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(asOfDate, creationDate, curveId, id, term, value);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CurvePoint other = (CurvePoint) obj;
-		return Objects.equals(asOfDate, other.asOfDate) && Objects.equals(creationDate, other.creationDate)
-				&& curveId == other.curveId && id == other.id
-				&& Double.doubleToLongBits(term) == Double.doubleToLongBits(other.term)
-				&& Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
-	}
-	
-	
 
 }

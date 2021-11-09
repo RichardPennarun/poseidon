@@ -47,9 +47,9 @@ public class BidController {
 
 	@PutMapping("/bid/{id}")
 	public Bid updateBid(@PathVariable("id") final Integer id, @RequestBody Bid bid) {
-		Optional<Bid> e = bidService.getBid(id);
-		if (e.isPresent()) {
-			Bid currentBid = e.get();
+		Optional<Bid> b = bidService.getBid(id);
+		if (b.isPresent()) {
+			Bid currentBid = b.get();
 
 			String account = bid.getAccount();
 			if (account != null) {
