@@ -30,8 +30,6 @@ public class TradeProxy {
 				new ParameterizedTypeReference<Iterable<Trade>>() {}
 			);
 		
-		//log.debug("Get Trades call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -46,8 +44,6 @@ public class TradeProxy {
 				null,
 				Trade.class
 			);
-		
-		//log.debug("Get Trade call " + response.getStatusCode().toString());
 		
 		return response.getBody();
 	}
@@ -64,8 +60,6 @@ public class TradeProxy {
 				request, 
 				Trade.class);
 		
-		//log.debug("Create Trade call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -81,8 +75,6 @@ public class TradeProxy {
 				request, 
 				Trade.class);
 		
-		//log.debug("Update Trade call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -96,8 +88,6 @@ public class TradeProxy {
 				HttpMethod.DELETE, 
 				null, 
 				Void.class);
-		
-		//log.debug("Delete Trade call " + response.getStatusCode().toString());
 	}
 
 }

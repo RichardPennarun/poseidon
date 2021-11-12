@@ -30,8 +30,6 @@ public class BidProxy {
 				new ParameterizedTypeReference<Iterable<Bid>>() {}
 			);
 		
-		//log.debug("Get BidLists call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -46,8 +44,6 @@ public class BidProxy {
 				null,
 				Bid.class
 			);
-		
-		//log.debug("Get BidList call " + response.getStatusCode().toString());
 		
 		return response.getBody();
 	}
@@ -64,8 +60,6 @@ public class BidProxy {
 				request, 
 				Bid.class);
 		
-		//log.debug("Create BidList call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -81,8 +75,6 @@ public class BidProxy {
 				request, 
 				Bid.class);
 		
-		//log.debug("Update BidList call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -96,8 +88,6 @@ public class BidProxy {
 				HttpMethod.DELETE, 
 				null, 
 				Void.class);
-		
-		//log.debug("Delete BidList call " + response.getStatusCode().toString());
 	}
 
 }

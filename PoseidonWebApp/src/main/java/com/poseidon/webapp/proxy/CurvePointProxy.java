@@ -30,8 +30,6 @@ public class CurvePointProxy {
 				new ParameterizedTypeReference<Iterable<CurvePoint>>() {}
 			);
 		
-		//log.debug("Get CurvePoints call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -46,8 +44,6 @@ public class CurvePointProxy {
 				null,
 				CurvePoint.class
 			);
-		
-		//log.debug("Get CurvePoint call " + response.getStatusCode().toString());
 		
 		return response.getBody();
 	}
@@ -64,8 +60,6 @@ public class CurvePointProxy {
 				request, 
 				CurvePoint.class);
 		
-		//log.debug("Create CurvePoint call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -81,8 +75,6 @@ public class CurvePointProxy {
 				request, 
 				CurvePoint.class);
 		
-		//log.debug("Update CurvePoint call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -96,8 +88,6 @@ public class CurvePointProxy {
 				HttpMethod.DELETE, 
 				null, 
 				Void.class);
-		
-		//log.debug("Delete CurvePoint call " + response.getStatusCode().toString());
 	}
 
 }

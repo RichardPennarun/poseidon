@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.poseidon.webapp.model.Trade;
-import com.poseidon.webapp.model.Trade;
 
 @SpringBootTest
 public class TradeServiceTest {
@@ -29,7 +28,6 @@ public class TradeServiceTest {
 		tradeToSave.setBuyQuantity(100);
 
 		Trade createdTrade = tradeService.saveTrade(tradeToSave);
-		//assertThat(createdTrade).isEqualTo(tradeToSave);
 
 		tradeService.getTrades();
 		

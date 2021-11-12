@@ -27,7 +27,6 @@ public class BidServiceTest {
 		bidToSave.setBidQuantity(100);
 
 		Bid createdBid = bidService.saveBid(bidToSave);
-		//assertThat(createdBid).isEqualTo(bidToSave);
 
 		bidService.getBids();
 		

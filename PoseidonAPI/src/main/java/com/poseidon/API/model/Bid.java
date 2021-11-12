@@ -2,8 +2,6 @@ package com.poseidon.API.model;
 
 
 import java.sql.Timestamp;
-import java.util.Objects;
-
 import javax.persistence.*;
 
 @Entity
@@ -48,8 +46,6 @@ public class Bid {
 	public Bid() {
 	}
 	
-
-
 
 	public int getId() {
 		return id;
@@ -226,9 +222,4 @@ public class Bid {
 	public void setSide(String side) {
 		this.side = side;
 	}
-	
-	
-	
-
-	
 }

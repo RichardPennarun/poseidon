@@ -1,7 +1,5 @@
 package com.poseidon.webapp.model;
 
-import java.util.Objects;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 

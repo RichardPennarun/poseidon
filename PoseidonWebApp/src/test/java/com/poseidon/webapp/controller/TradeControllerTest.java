@@ -1,12 +1,12 @@
 package com.poseidon.webapp.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,11 +15,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poseidon.webapp.model.Trade;
-import com.poseidon.webapp.proxy.TradeProxy;
 import com.poseidon.webapp.service.TradeService;
 
 @SpringBootTest
@@ -28,9 +29,6 @@ public class TradeControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
-	@MockBean
-	private TradeProxy tradeProxy;
 
 	@MockBean
 	private TradeService tradeService;
@@ -69,22 +67,42 @@ public class TradeControllerTest {
 				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk());
 	}
 
-	@Disabled
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void validateAddOk() throws Exception {
 
-		Trade tradeToSave = new Trade();
-		tradeToSave.setAccount("Rose");
-		tradeToSave.setType("AAA");
-		tradeToSave.setBuyQuantity(100);
+		MockHttpServletRequestBuilder builder = 
+				post("/validateTradeAdd")
+				.accept(MediaType.TEXT_HTML)
+				.param("account", "Rose")
+				.param("type", "AAA")
+				.param("buyQuantity", "10")
+				.with(csrf());
 
-		when(tradeService.saveTrade(tradeToSave)).thenReturn(tradeToSave);
-
-		mockMvc.perform(post("/validateTradeAdd").content(asJsonString(tradeToSave)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(redirectedUrl("/tradeList"));
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(0)).andExpect(redirectedUrl("/tradeList"));
 	}
 
+	
+	@Test
+	@WithMockUser(username = "user", password = "1")
+	public void validateAddNotOk() throws Exception {
+
+		MockHttpServletRequestBuilder builder = 
+				post("/validateTradeAdd")
+				.accept(MediaType.TEXT_HTML)
+				.param("account", "")
+				.param("type", "AAA")
+				.param("buyQuantity", "10")
+				.with(csrf());
+
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(1))
+		.andExpect(MockMvcResultMatchers.view().name("trade/add"));
+	}
+
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void testUpdateTrade() throws Exception {
@@ -102,21 +120,31 @@ public class TradeControllerTest {
 				.andExpect(status().isOk());
 	}
 
-	@Disabled
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void validateUpdateOk() throws Exception {
 
-		Trade tradeToSave = new Trade();
-		tradeToSave.setAccount("Rose");
-		tradeToSave.setType("AAA");
-		tradeToSave.setBuyQuantity(100);
+		MockHttpServletRequestBuilder builder =
 
-		when(tradeService.saveTrade(tradeToSave)).thenReturn(tradeToSave);
+				post("/validateTradeUpdate").accept(MediaType.TEXT_HTML).param("id", "2").param("account", "Rose")
+						.param("type", "AAA").param("buyQuantity", "10").with(csrf());
 
-		mockMvc.perform(post("/validateTradeUpdate").content(asJsonString(tradeToSave)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(redirectedUrl("/tradeList"));
+		mockMvc.perform(builder).andDo(print()).andExpect(model().errorCount(0)).andExpect(redirectedUrl("/tradeList"));
 	}
+
+	
+	@Test
+	@WithMockUser(username = "user", password = "1")
+	public void validateUpdateNotOk() throws Exception {
+
+		MockHttpServletRequestBuilder builder = post("/validateTradeUpdate").accept(MediaType.TEXT_HTML).param("id", "2")
+				.param("account", "").param("type", "AAA").param("buyQuantity", "10").with(csrf());
+
+		mockMvc.perform(builder).andDo(print()).andExpect(model().errorCount(1))
+				.andExpect(MockMvcResultMatchers.view().name("trade/update"));
+	}
+	
 
 	@Test
 	@WithMockUser(username = "user", password = "1")

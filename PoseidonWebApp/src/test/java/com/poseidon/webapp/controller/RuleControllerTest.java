@@ -1,12 +1,12 @@
 package com.poseidon.webapp.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,11 +15,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poseidon.webapp.model.Rule;
-import com.poseidon.webapp.proxy.RuleProxy;
 import com.poseidon.webapp.service.RuleService;
 
 @SpringBootTest
@@ -28,9 +29,6 @@ public class RuleControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
-	@MockBean
-	private RuleProxy ruleProxy;
 
 	@MockBean
 	private RuleService ruleService;
@@ -72,25 +70,48 @@ public class RuleControllerTest {
 				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk());
 	}
 
-	@Disabled
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void validateAddOk() throws Exception {
 
-		Rule ruleToSave = new Rule();
-		ruleToSave.setName("a");
-		ruleToSave.setDescription("b");
-		ruleToSave.setJson("c");
-		ruleToSave.setTemplate("d");
-		ruleToSave.setSqlStr("e");
-		ruleToSave.setSqlPart("f");
+		MockHttpServletRequestBuilder builder = 
+				post("/validateRuleAdd")
+				.accept(MediaType.TEXT_HTML)
+				.param("name", "a")
+				.param("description", "b")
+				.param("json", "c")
+				.param("template", "d")
+				.param("sqlStr", "e")
+				.param("sqlPart", "f")
+				.with(csrf());
 
-		when(ruleService.saveRule(ruleToSave)).thenReturn(ruleToSave);
-
-		mockMvc.perform(post("/validateRuleAdd").content(asJsonString(ruleToSave)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(redirectedUrl("/ruleList"));
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(0)).andExpect(redirectedUrl("/ruleList"));
 	}
 
+	
+	@Test
+	@WithMockUser(username = "user", password = "1")
+	public void validateAddNotOk() throws Exception {
+
+		MockHttpServletRequestBuilder builder = 
+				post("/validateRuleAdd")
+				.accept(MediaType.TEXT_HTML)
+				.param("name", "")
+				.param("description", "b")
+				.param("json", "c")
+				.param("template", "d")
+				.param("sqlStr", "e")
+				.param("sqlPart", "f")
+				.with(csrf());
+
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(1))
+		.andExpect(MockMvcResultMatchers.view().name("rule/add"));
+	}
+
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void testUpdateRule() throws Exception {
@@ -111,24 +132,49 @@ public class RuleControllerTest {
 				.andExpect(status().isOk());
 	}
 
-	@Disabled
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void validateUpdateOk() throws Exception {
 
-		Rule ruleToSave = new Rule();
-		ruleToSave.setName("a");
-		ruleToSave.setDescription("b");
-		ruleToSave.setJson("c");
-		ruleToSave.setTemplate("d");
-		ruleToSave.setSqlStr("e");
-		ruleToSave.setSqlPart("f");
+		MockHttpServletRequestBuilder builder = 
+				post("/validateRuleUpdate")
+				.accept(MediaType.TEXT_HTML)
+				.param("id", "22")
+				.param("name", "a")
+				.param("description", "b")
+				.param("json", "c")
+				.param("template", "d")
+				.param("sqlStr", "e")
+				.param("sqlPart", "f")
+				.with(csrf());
 
-		when(ruleService.saveRule(ruleToSave)).thenReturn(ruleToSave);
-
-		mockMvc.perform(post("/validateRuleUpdate").content(asJsonString(ruleToSave)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(redirectedUrl("/ruleList"));
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(0)).andExpect(redirectedUrl("/ruleList"));
 	}
+
+	
+	@Test
+	@WithMockUser(username = "user", password = "1")
+	public void validateUpdateNotOk() throws Exception {
+
+		MockHttpServletRequestBuilder builder = 
+				post("/validateRuleUpdate")
+				.accept(MediaType.TEXT_HTML)
+				.param("id", "22")
+				.param("name", "")
+				.param("description", "b")
+				.param("json", "c")
+				.param("template", "d")
+				.param("sqlStr", "e")
+				.param("sqlPart", "f")
+				.with(csrf());
+
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(1))
+		.andExpect(MockMvcResultMatchers.view().name("rule/update"));
+	}
+	
 
 	@Test
 	@WithMockUser(username = "user", password = "1")

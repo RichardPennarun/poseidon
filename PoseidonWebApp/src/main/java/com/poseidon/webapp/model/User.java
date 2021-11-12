@@ -1,7 +1,5 @@
 package com.poseidon.webapp.model;
 
-import java.util.Objects;
-
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.stereotype.Component;
@@ -23,7 +21,6 @@ public class User {
 	
 	public User() {
 	}
-	
 	
 
 

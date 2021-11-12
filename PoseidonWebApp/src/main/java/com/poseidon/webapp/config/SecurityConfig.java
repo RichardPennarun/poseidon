@@ -22,7 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
 	 
-	
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -58,14 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login")
                 .permitAll();
-		/*
-		 * http.authorizeRequests() .antMatchers("/user").hasRole("USER")
-		 * .anyRequest().authenticated() .and() .formLogin()
-		 * .loginPage("/login").loginPage("/login")
-		 * .defaultSuccessUrl("/home").failureUrl("/login?error=true").permitAll()
-		 * .and().logout()
-		 * .deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/login");
-		 */
 	}
 	
 	@Bean

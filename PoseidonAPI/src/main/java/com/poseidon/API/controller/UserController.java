@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poseidon.API.model.User;
 import com.poseidon.API.service.UserService;
-import com.poseidon.API.service.UserServiceImpl;
 
 @RestController
 public class UserController {

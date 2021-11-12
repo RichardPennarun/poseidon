@@ -17,16 +17,17 @@ public class UserProxy {
 	@Autowired
 	private CustomProperties props;
 
+	
 	// Get a user by its username (authentication)
 	public User findByUsername(String username) {
 		String baseApiUrl = props.getApiUrl();
 		String getUserUrl = baseApiUrl + "/user/" + username;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<User> response = restTemplate.exchange(getUserUrl, HttpMethod.GET, null, User.class);
-		//logger.info("User found by its email.");
 		return response.getBody();
 	}
 
+	
 	public Iterable<User> getUsers() {
 
 		String baseApiUrl = props.getApiUrl();
@@ -40,10 +41,9 @@ public class UserProxy {
 				new ParameterizedTypeReference<Iterable<User>>() {}
 			);
 		
-		//log.debug("Get Users call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
+	
 	
 	public User getUser(int id) {
 		String baseApiUrl = props.getApiUrl();
@@ -56,8 +56,6 @@ public class UserProxy {
 				null,
 				User.class
 			);
-		
-		//log.debug("Get User call " + response.getStatusCode().toString());
 		
 		return response.getBody();
 	}
@@ -74,8 +72,6 @@ public class UserProxy {
 				request, 
 				User.class);
 		
-		//log.debug("Create User call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -91,8 +87,6 @@ public class UserProxy {
 				request, 
 				User.class);
 		
-		//log.debug("Update User call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -106,8 +100,7 @@ public class UserProxy {
 				HttpMethod.DELETE, 
 				null, 
 				Void.class);
-		
-		//log.debug("Delete User call " + response.getStatusCode().toString());
+
 	}
 
 }

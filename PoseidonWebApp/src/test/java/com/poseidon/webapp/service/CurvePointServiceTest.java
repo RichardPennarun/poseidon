@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.poseidon.webapp.model.CurvePoint;
-import com.poseidon.webapp.model.CurvePoint;
 
 @SpringBootTest
 public class CurvePointServiceTest {
@@ -29,7 +28,6 @@ public class CurvePointServiceTest {
 		curvePointToSave.setValue(10.0);
 
 		CurvePoint createdCurvePoint = curvePointService.saveCurvePoint(curvePointToSave);
-		//assertThat(createdCurvePoint).isEqualTo(curvePointToSave);
 
 		curvePointService.getCurvePoints();
 		

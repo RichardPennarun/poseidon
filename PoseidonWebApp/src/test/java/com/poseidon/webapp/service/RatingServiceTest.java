@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.poseidon.webapp.model.Rating;
-import com.poseidon.webapp.model.Rating;
 
 @SpringBootTest
 public class RatingServiceTest {
@@ -30,7 +29,6 @@ public class RatingServiceTest {
 		ratingToSave.setOrderNumber(100);
 
 		Rating createdRating = ratingService.saveRating(ratingToSave);
-		//assertThat(createdRating).isEqualTo(ratingToSave);
 
 		ratingService.getRatings();
 		

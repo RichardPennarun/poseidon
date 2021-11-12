@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.poseidon.webapp.model.User;
-import com.poseidon.webapp.model.User;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -30,7 +29,6 @@ public class UserServiceTest {
 		userToSave.setPassword("123");
 
 		User createdUser = userService.saveUser(userToSave);
-		//assertThat(createdUser).isEqualTo(userToSave);
 
 		userService.getUsers();
 		

@@ -30,8 +30,6 @@ public class RuleProxy {
 				new ParameterizedTypeReference<Iterable<Rule>>() {}
 			);
 		
-		//log.debug("Get Rules call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -46,8 +44,6 @@ public class RuleProxy {
 				null,
 				Rule.class
 			);
-		
-		//log.debug("Get Rule call " + response.getStatusCode().toString());
 		
 		return response.getBody();
 	}
@@ -64,8 +60,6 @@ public class RuleProxy {
 				request, 
 				Rule.class);
 		
-		//log.debug("Create Rule call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -81,8 +75,6 @@ public class RuleProxy {
 				request, 
 				Rule.class);
 		
-		//log.debug("Update Rule call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -96,8 +88,6 @@ public class RuleProxy {
 				HttpMethod.DELETE, 
 				null, 
 				Void.class);
-		
-		//log.debug("Delete Rule call " + response.getStatusCode().toString());
 	}
 
 }

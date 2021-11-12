@@ -1,7 +1,5 @@
 package com.poseidon.API.model;
 
-import java.util.Objects;
-
 import javax.persistence.*;
 
 @Entity

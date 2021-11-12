@@ -1,6 +1,5 @@
 package com.poseidon.API.service;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import com.poseidon.API.model.User;

@@ -1,8 +1,6 @@
 package com.poseidon.API.model;
 
 import java.sql.Timestamp;
-import java.util.Objects;
-
 import javax.persistence.*;
 
 @Entity

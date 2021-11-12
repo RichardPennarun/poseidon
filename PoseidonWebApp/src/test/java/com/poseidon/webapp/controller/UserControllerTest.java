@@ -1,12 +1,12 @@
 package com.poseidon.webapp.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,11 +15,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poseidon.webapp.model.User;
-import com.poseidon.webapp.proxy.UserProxy;
 import com.poseidon.webapp.service.UserService;
 
 @SpringBootTest
@@ -28,9 +29,6 @@ public class UserControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
-	@MockBean
-	private UserProxy userProxy;
 
 	@MockBean
 	private UserService userService;
@@ -70,22 +68,43 @@ public class UserControllerTest {
 				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk());
 	}
 
-	@Disabled
+
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void validateAddOk() throws Exception {
 
-		User userToSave = new User();
-		userToSave.setUsername("a");
-		userToSave.setPassword("b");
-		userToSave.setFullname("c");
-		userToSave.setRole("d");
+		MockHttpServletRequestBuilder builder = 
+				post("/validateUserAdd")
+				.accept(MediaType.TEXT_HTML)
+				.param("username", "a")
+				.param("password", "Aaaa1:aa")
+				.param("fullname", "c")
+				.param("role", "d")
+				.with(csrf());
 
-		when(userService.saveUser(userToSave)).thenReturn(userToSave);
-
-		mockMvc.perform(post("/validateUserAdd").content(asJsonString(userToSave)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(redirectedUrl("/userList"));
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(0)).andExpect(redirectedUrl("/userList"));
 	}
+
+
+	@Test
+	@WithMockUser(username = "user", password = "1")
+	public void validateAddNotOk() throws Exception {
+
+		MockHttpServletRequestBuilder builder = 
+				post("/validateUserAdd")
+				.accept(MediaType.TEXT_HTML)
+				.param("username", "")
+				.param("password", "Aaaa1:aa")
+				.param("fullname", "c")
+				.param("role", "d")
+				.with(csrf());
+
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(1))
+		.andExpect(MockMvcResultMatchers.view().name("user/add"));
+	}
+	
 
 	@Test
 	@WithMockUser(username = "user", password = "1")
@@ -105,23 +124,46 @@ public class UserControllerTest {
 				.andExpect(status().isOk());
 	}
 
-	@Disabled
+
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void validateUpdateOk() throws Exception {
 
-		User userToSave = new User();
-		userToSave.setUsername("a");
-		userToSave.setPassword("b");
-		userToSave.setFullname("c");
-		userToSave.setRole("d");
+		MockHttpServletRequestBuilder builder = 
+				post("/validateUserUpdate")
+				.accept(MediaType.TEXT_HTML)
+				.param("id", "6")
+				.param("username", "a")
+				.param("password", "Aaaa1:aa")
+				.param("fullname", "c")
+				.param("role", "d")
+				.with(csrf());
 
-		when(userService.saveUser(userToSave)).thenReturn(userToSave);
-
-		mockMvc.perform(post("/validateUserUpdate").content(asJsonString(userToSave)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(redirectedUrl("/userList"));
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(0)).andExpect(redirectedUrl("/userList"));
 	}
 
+
+	@Test
+	@WithMockUser(username = "user", password = "1")
+	public void validateUpdateNotOk() throws Exception {
+
+		MockHttpServletRequestBuilder builder = 
+				post("/validateUserUpdate")
+				.accept(MediaType.TEXT_HTML)
+				.param("id", "6")
+				.param("username", "")
+				.param("password", "Aaaa1:aa")
+				.param("fullname", "c")
+				.param("role", "d")
+				.with(csrf());
+
+		mockMvc.perform(builder).andDo(print())
+		.andExpect(model().errorCount(1))
+		.andExpect(MockMvcResultMatchers.view().name("user/update"));
+	}
+
+	
 	@Test
 	@WithMockUser(username = "user", password = "1")
 	public void testDeleteUser() throws Exception {

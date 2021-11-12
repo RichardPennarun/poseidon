@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.poseidon.webapp.model.Rule;
-import com.poseidon.webapp.model.Rule;
 
 @SpringBootTest
 public class RuleServiceTest {
@@ -32,7 +31,6 @@ public class RuleServiceTest {
 		ruleToSave.setSqlPart("d");
 
 		Rule createdRule = ruleService.saveRule(ruleToSave);
-		//assertThat(createdRule).isEqualTo(ruleToSave);
 
 		ruleService.getRules();
 		

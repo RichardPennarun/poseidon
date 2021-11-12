@@ -30,8 +30,6 @@ public class RatingProxy {
 				new ParameterizedTypeReference<Iterable<Rating>>() {}
 			);
 		
-		//log.debug("Get Ratings call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -46,8 +44,6 @@ public class RatingProxy {
 				null,
 				Rating.class
 			);
-		
-		//log.debug("Get Rating call " + response.getStatusCode().toString());
 		
 		return response.getBody();
 	}
@@ -64,8 +60,6 @@ public class RatingProxy {
 				request, 
 				Rating.class);
 		
-		//log.debug("Create Rating call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -81,8 +75,6 @@ public class RatingProxy {
 				request, 
 				Rating.class);
 		
-		//log.debug("Update Rating call " + response.getStatusCode().toString());
-		
 		return response.getBody();
 	}
 	
@@ -96,8 +88,6 @@ public class RatingProxy {
 				HttpMethod.DELETE, 
 				null, 
 				Void.class);
-		
-		//log.debug("Delete Rating call " + response.getStatusCode().toString());
 	}
 
 }
