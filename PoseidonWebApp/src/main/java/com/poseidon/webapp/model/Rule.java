@@ -1,12 +1,12 @@
 package com.poseidon.webapp.model;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 
 public class Rule {
 
 	private int id;
-	@NotEmpty(message="Name is mandatory")
+	@NotBlank(message="Name is mandatory")
 	private String name;
 	private String description;
 	private String json;

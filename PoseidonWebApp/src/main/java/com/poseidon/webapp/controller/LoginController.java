@@ -22,13 +22,12 @@ public class LoginController {
         return mav;
     }
 
-    @GetMapping("secure/article-details")
-    public ModelAndView getAllUserArticles() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userProxy.getUsers());
-        mav.setViewName("user/list");
-        return mav;
-    }
+	/*
+	 * @GetMapping("secure/article-details") public ModelAndView
+	 * getAllUserArticles() { ModelAndView mav = new ModelAndView();
+	 * mav.addObject("users", userProxy.getUsers()); mav.setViewName("user/list");
+	 * return mav; }
+	 */
 
     @GetMapping("error")
     public ModelAndView error() {

@@ -1,15 +1,16 @@
 package com.poseidon.webapp.model;
 
 import java.sql.Timestamp;
-import javax.validation.constraints.NotEmpty;
+
+import javax.validation.constraints.NotBlank;
 
 
 public class Bid {
 
 	private int id;
-	@NotEmpty(message="Account is mandatory")
+	@NotBlank(message="Account is mandatory")
 	private String account;
-	@NotEmpty(message="Type is mandatory")
+	@NotBlank(message="Type is mandatory")
 	private String type;
 	private double bidQuantity;
 	private double askQuantity;
